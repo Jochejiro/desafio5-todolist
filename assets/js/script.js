@@ -11,32 +11,31 @@ const renderizarTaskList = (taskList) => {
   let html = '';
 
   taskList.forEach((task) => {
+
+    const statusBtnIcon = task.estado ? 'bi-clipboard-check-fill' : 'bi-clipboard-fill';
     html += `<tr>
                 <td>${task.id}</td>
                 <td>${task.taskName}</td>
-                <td><button onclick="changeStatusTask(${task.id})">${
-      task.estado
-        ? '<i class="bi bi-clipboard-check-fill"></i>'
-        : '<i class="bi bi-clipboard-fill"></i>'
-    }</button></td>
-                <td><button onclick="deleteTask(${
-                  task.id
-                })"><i class="bi bi-trash-fill"></i></button></td>
+                <td><button onclick="changeStatusTask(${task.id})"><i class="${statusBtnIcon}"></i></button></td>
+                <td><button onclick="deleteTask(${task.id})"><i class="bi bi-trash-fill"></i></button></td>
             </tr>`;
   });
 
   document.getElementById('task-list').innerHTML = html;
   document.getElementById('task-total').innerHTML = taskList.length;
-  document.getElementById('task-closed').innerHTML = taskList.filter((task) => task.estado == true).length;
+  document.getElementById('task-closed').innerHTML = taskList.filter((task) => task.estado === true).length;
 };
 
 // FUNCION QUE CAMBIA EL ESTADO DE LA TAREA
 const changeStatusTask = (id) => {
-  taskList.forEach((task) =>
-    task.id === id
-      ? (task.estado = !task.estado)
-      : console.log('Error al cambiar el estado 😥')
-  );
+
+  const task = taskList.find((task) => task.id === id);
+  
+  if (task) {
+    task.estado = !task.estado;
+  } else {
+    console.log('Error al cambiar el estado de la tarea 😥');
+  }
 
   renderizarTaskList(taskList);
 };
@@ -54,11 +53,16 @@ const deleteTask = (id) => {
   renderizarTaskList(taskList);
 };
 
-// FUNCION QUE GENERA UNA NUEVA TAREA
+// FUNCION QUE ME GENERA ID
+const generarId = (taskList) => {
+  return taskList.length ? taskList[taskList.length - 1].id + 1 : 1;
+};
+
+// EVENTO QUE GENERA UNA NUEVA TAREA Y LA CARGA AL ARRAY
 document.getElementById('btn-newtask').addEventListener('click', () => {
   const newTask = document.getElementById('input-newtask');
   
-  if (newTask.value) {
+  if (newTask.value.trim() !== '') {
     const task = {
       id: generarId(taskList),
       taskName: newTask.value,
@@ -75,15 +79,11 @@ document.getElementById('btn-newtask').addEventListener('click', () => {
   }
 });
 
-// FUNCION QUE ME GENERA ID
-const generarId = (taskList) => {
-  return taskList.length ? taskList[taskList.length - 1].id + 1 : 1;
-};
-
-// FUNCION QUE AL HACER CLICK EN EL INPUT REMUEVE EL ERROR
+// EVENTO QUE AL HACER CLICK EN EL INPUT REMUEVE EL ERROR
 document.getElementById('input-newtask').addEventListener('click', (element) => {
   element.target.classList.remove('is-invalid');
   element.target.placeholder = '';
 });
 
+// RENDERIZA LA LISTA DE TAREAS INICIAL
 renderizarTaskList(taskList);

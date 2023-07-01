@@ -21,11 +21,14 @@
     <main class="px-3">
       <div class="row pb-4">
         <div class="col-8 col-md-10">
-          <label for="input-newtask" class="form-label">Nueva Tarea</label>
+          <label for="input-newtask" class="form-label mb-1">Nueva Tarea</label>
           <input id="input-newtask" class="form-control" type="text" required />
+          <div class="invalid-feedback">
+            Ingrese un nombre a la tarea.
+          </div>
         </div>
-        <div class="col-4 col-md-2 d-flex align-items-end">
-          <button id="btn-newtask" class="btn btn-success w-100">
+        <div class="col-4 col-md-2 py-4">
+          <button id="btn-newtask" class="btn btn-success w-100 mt-1" >
             Agregar
           </button>
         </div>

@@ -5,7 +5,6 @@ let taskList = [
   { id: 3, taskName: 'Viajar a Taj Mahal', estado: false },
 ];
 
-
 // FUNCION QUE RENDERIZA EN EL HTML
 const renderizarTaskList = (taskList) => {
   let html = '';
@@ -75,14 +74,12 @@ document.getElementById('btn-newtask').addEventListener('click', () => {
 
   } else {
     newTask.classList.add('is-invalid');
-    newTask.placeholder = 'No puede estar vacio!';
   }
 });
 
 // EVENTO QUE AL HACER CLICK EN EL INPUT REMUEVE EL ERROR
-document.getElementById('input-newtask').addEventListener('click', (element) => {
-  element.target.classList.remove('is-invalid');
-  element.target.placeholder = '';
+document.getElementById('input-newtask').addEventListener('click', (inputNewTask) => {
+  inputNewTask.target.classList.remove('is-invalid');
 });
 
 // RENDERIZA LA LISTA DE TAREAS INICIAL

@@ -1,4 +1,6 @@
-// ARREGLO DE INICIO
+// DECLARACION DE VARIABLES GENERALES Y ARREGLO DE INICIO
+let newTask = document.getElementById('input-newtask');
+const btnNewTask = document.getElementById('btn-newtask');
 let taskList = [
   { id: 1, taskName: 'Viajar a la Gran Muralla China', estado: true },
   { id: 2, taskName: 'Viajar a Machu Picchu', estado: true },
@@ -15,8 +17,8 @@ const renderizarTaskList = (taskList) => {
     html += `<tr>
                 <td>${task.id}</td>
                 <td>${task.taskName}</td>
-                <td><button onclick="changeStatusTask(${task.id})"><i class="${statusBtnIcon}"></i></button></td>
-                <td><button onclick="deleteTask(${task.id})"><i class="bi bi-trash-fill"></i></button></td>
+                <td><i class="${statusBtnIcon}" onclick="changeStatusTask(${task.id})"></i></td>
+                <td><i class="bi bi-trash-fill" onclick="deleteTask(${task.id})"></i></td>
             </tr>`;
   });
 
@@ -58,9 +60,8 @@ const generarId = (taskList) => {
 };
 
 // EVENTO QUE GENERA UNA NUEVA TAREA Y LA CARGA AL ARRAY
-document.getElementById('btn-newtask').addEventListener('click', () => {
-  const newTask = document.getElementById('input-newtask');
-  
+btnNewTask.addEventListener('click', () => {
+ 
   if (newTask.value.trim() !== '') {
     const task = {
       id: generarId(taskList),
@@ -71,6 +72,7 @@ document.getElementById('btn-newtask').addEventListener('click', () => {
     taskList.push(task);
     renderizarTaskList(taskList);
     newTask.value = '';
+    newTask.focus();
 
   } else {
     newTask.classList.add('is-invalid');
@@ -78,8 +80,8 @@ document.getElementById('btn-newtask').addEventListener('click', () => {
 });
 
 // EVENTO QUE AL HACER CLICK EN EL INPUT REMUEVE EL ERROR
-document.getElementById('input-newtask').addEventListener('click', (inputNewTask) => {
-  inputNewTask.target.classList.remove('is-invalid');
+newTask.addEventListener('click', () => {
+  newTask.classList.remove('is-invalid');
 });
 
 // RENDERIZA LA LISTA DE TAREAS INICIAL
